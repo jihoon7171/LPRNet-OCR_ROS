@@ -1,0 +1,18 @@
+<launch>
+    <!-- Configuration arguments for inference -->
+    <arg name="config_path" default="/home/jihoon/catkin_ws/src/ocr_ros/config/kor_config.yaml" />
+    <arg name="view_image" default="true" />
+    <arg name="output_topic" default="/lprnet/inference_results" />
+
+    <!-- ROS node configuration -->
+    <node pkg="ocr_ros" name="lprnet_inference_node" type="detect.py" output="screen">
+        <!-- Path to the configuration file -->
+        <param name="config_path" value="$(arg config_path)" />
+
+        <!-- Optional visualization parameter -->
+        <param name="view_image" value="$(arg view_image)" />
+
+        <!-- Output topic for inference results -->
+        <param name="output_topic" value="$(arg output_topic)" />
+    </node>
+</launch>
