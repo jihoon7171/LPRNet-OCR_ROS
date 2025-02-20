@@ -14,6 +14,10 @@ This code is a modified version of Intel’s License Plate Recognition (LPRNet) 
 For the original technology details, please refer to:
 License Plate Recognition using LPRNet Model (Intel)
 
+
+![image](https://github.com/user-attachments/assets/8186dba8-6ad5-45dc-9e13-39daa9b17dd5)
+
+
 Copyright Notice: 
 
 This project is not the original creation of the LPRNet model. The original LPRNet model was developed by Intel.
