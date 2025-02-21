@@ -14,7 +14,17 @@ This code is a modified version of Intel’s License Plate Recognition (LPRNet) 
 For the original technology details, please refer to:
 License Plate Recognition using LPRNet Model (Intel)
 
-
+```
+cd ~/catkin_ws/src
+git clone https://github.com/jihoon7171/LPRNet-OCR_ROS.git
+cd ..
+catkin_make
+```
+execution command
+```
+roslaunch ocr_ros ocr_ros.launch
+rosrun ocr_ros detect.py
+```
 ![image](https://github.com/user-attachments/assets/8186dba8-6ad5-45dc-9e13-39daa9b17dd5)
 
 
