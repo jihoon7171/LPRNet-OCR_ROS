@@ -23,7 +23,7 @@ class LPRNetInferenceNode:
     def __init__(self):
         """초기화 메서드: 설정 파일 로드 및 모델 초기화"""
         rospy.init_node("lprnet_inference_node", anonymous=True)
-        self.save_dir = '/home/jihoon/catkin_ws/ocr_ros/save_plate'
+        self.save_dir = '/home/jihoon/catkin_ws/src/LPRNet-OCR_ROS/ocr_ros/save_plate'
         self.save_path = os.path.join(self.save_dir, "plate_result.json")
         if not os.path.exists(self.save_dir):
             os.makedirs(self.save_dir)
@@ -50,10 +50,8 @@ class LPRNetInferenceNode:
     def infer(self):
         """Inference 수행 메서드"""
         imgs = [el for el in paths.list_images(self.args.test_dir)]
-        labels = [
-            os.path.basename(n).split(".")[0].split("-")[0].split("_")[0]
-            for n in imgs
-        ]
+        labels = [os.path.basename(n).split(".")[0] for n in imgs]
+
 
         acc = []
         times = []
@@ -73,12 +71,14 @@ class LPRNetInferenceNode:
             # 결과 출력 및 퍼블리시
             result_msg = f"Image: {os.path.basename(img)}, Prediction: {pred[0]}, Label: {labels[i]}"
             self.plate_dictionary[os.path.basename(img)] = pred[0]
+            rospy.loginfo(pred[0])
 
             rospy.loginfo(result_msg)
             self.result_pub.publish(result_msg)
-        with open(self.save_path, 'w') as f:
-            json.dump(self.plate_dictionary, f)
+        with open(self.save_path, 'w', encoding = 'utf-8') as f:
+            json.dump(self.plate_dictionary, f, ensure_ascii=False)
         # 정확도 및 시간 통계 출력
+
         self.log_statistics(acc, times)
 
     def log_statistics(self, acc, times):

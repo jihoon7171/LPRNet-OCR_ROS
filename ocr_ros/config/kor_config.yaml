@@ -1,8 +1,8 @@
 train_dir: '../datas/kor-plates/train/'
 valid_dir: '../datas/kor-plates/valid/'
-test_dir: '/home/jihoon/catkin_ws/src/ocr_ros/test_imgs/'
+test_dir: '//home/jihoon/catkin_ws/src/LPRNet-OCR_ROS/ocr_ros/test_imgs/'
 saving_ckpt: 'saving_ckpt'
-pretrained: '/home/jihoon/catkin_ws/src/ocr_ros/weights/last.ckpt'
+pretrained: '/home/jihoon/catkin_ws/src/LPRNet-OCR_ROS/ocr_ros/weights/last.ckpt'
 img_size: !!python/tuple [100, 50]
 dropout_rate: 0.5
 weight_decay: 0.00002
