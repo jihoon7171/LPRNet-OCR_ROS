@@ -1,4 +1,4 @@
-#LPRNet-OCR_ROS
+# LPRNet-OCR_ROS
 
 This project provides an implementation of License Plate Recognition (LPR) using the LPRNet model, adapted to run in the ROS (Robot Operating System) environment. The system is designed to recognize vehicle license plates and save the OCR results in JSON format for further use.
 
@@ -24,25 +24,27 @@ source devel/setup.bash  # ROS environment setup
 ```
 
 
-#Configuration
+# Configuration
 
 Please modify the paths for test_dir, pretrained, and other settings in the config.yaml file inside the ocr_ros/config directory before use.
 
-#How to Run
+# How to Run
 
 To run the system, execute the following commands:
 	1.	Launch the system:
 ```
 roslaunch ocr_ros ocr_ros.launch
 ```
+
 	2.	Run the detection script:
+	
 ```
 rosrun ocr_ros detect.py
 ```
 
 After execution, all results are saved as JSON files in the ocr_ros/save_plate folder in the format: ‘filename: vehicle license plate OCR result.’
 
-#Output
+# Output
 
 The OCR results will be saved in the ocr_ros/save_plate folder in the following format:
 ```
@@ -60,6 +62,6 @@ This project is not the original creation of the LPRNet model. The original LPRN
 For more details on the original technology and licensing, please refer to the official documentation:
 Intel - License Plate Recognition using LPRNet Model
 
-#License
+# License
 
 This project is licensed under the Apache License 2.0. See the LICENSE file for full details. The Apache License 2.0 allows for both personal and commercial use with certain conditions.

@@ -3,6 +3,7 @@
     <arg name="config_path" default="/home/jihoon/catkin_ws/src/ocr_ros/config/kor_config.yaml" />
     <arg name="view_image" default="true" />
     <arg name="output_topic" default="/lprnet/inference_results" />
+    
 
     <!-- ROS node configuration -->
     <node pkg="ocr_ros" name="lprnet_inference_node" type="detect.py" output="screen">
