@@ -1,19 +1,23 @@
 <launch>
     <!-- Configuration arguments for inference -->
-    <arg name="config_path" default="/home/jihoon/catkin_ws/src/ocr_ros/config/kor_config.yaml" />
+    <arg name="config_path" default="/home/jihoon/catkin_ws/src/LPRNet-OCR_ROS/ocr_ros/config/kor_config.yaml" />
     <arg name="view_image" default="true" />
     <arg name="output_topic" default="/lprnet/inference_results" />
-    
+    <arg name ="save_dir" default="/home/jihoon/catkin_ws/src/ct_and_send/src/detection_save_image/plate_json"/>
+    <arg name = "test_dir" default="/home/jihoon/catkin_ws/src/ct_and_send/src/detection_save_image"/>
+    <arg name = "saving_ckpt" default="saving_ckpt"/>
+    <arg name = "pretrained" default="/home/jihoon/catkin_ws/src/LPRNet-OCR_ROS/ocr_ros/weights/last.ckpt"/>
+
 
     <!-- ROS node configuration -->
     <node pkg="ocr_ros" name="lprnet_inference_node" type="detect.py" output="screen">
-        <!-- Path to the configuration file -->
         <param name="config_path" value="$(arg config_path)" />
-
-        <!-- Optional visualization parameter -->
         <param name="view_image" value="$(arg view_image)" />
-
-        <!-- Output topic for inference results -->
         <param name="output_topic" value="$(arg output_topic)" />
+        <param name="save_dir" value="$(arg save_dir)" /> 
+        <param name="test_dir" value="$(arg test_dir)" />
+        <param name="saving_ckpt" value="$(arg saving_ckpt)" />
+        <param name="pretrained" value="$(arg pretrained)" />
     </node>
 </launch>
+

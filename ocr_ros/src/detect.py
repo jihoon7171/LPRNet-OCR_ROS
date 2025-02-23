@@ -23,7 +23,10 @@ class LPRNetInferenceNode:
     def __init__(self):
         """초기화 메서드: 설정 파일 로드 및 모델 초기화"""
         rospy.init_node("lprnet_inference_node", anonymous=True)
-        self.save_dir = '/home/jihoon/catkin_ws/src/LPRNet-OCR_ROS/ocr_ros/save_plate'
+        self.save_dir = rospy.get_param("~save_dir")#'/home/jihoon/catkin_ws/src/ct_and_send/src/detection_save_image' #'/home/jihoon/catkin_ws/src/LPRNet-OCR_ROS/ocr_ros/save_plate'
+        self.test_dir = rospy.get_param("~test_dir")
+        self.saving_ckpt = rospy.get_param("~saving_ckpt")
+        self.pretrained = rospy.get_param("~pretrained")
         self.save_path = os.path.join(self.save_dir, "plate_result.json")
         if not os.path.exists(self.save_dir):
             os.makedirs(self.save_dir)
@@ -43,18 +46,18 @@ class LPRNetInferenceNode:
     def load_model(self):
         """모델 로드 및 가중치 적용"""
         model = LPRNet(self.args).to(self.device).eval()
-        model.load_state_dict(torch.load(self.args.pretrained)["state_dict"])
+        model.load_state_dict(torch.load(self.pretrained)["state_dict"])
         rospy.loginfo("Model loaded successfully")
         return model
     
     def infer(self):
         """Inference 수행 메서드"""
-        imgs = [el for el in paths.list_images(self.args.test_dir)]
+        imgs = [el for el in paths.list_images(self.test_dir)]
         labels = [os.path.basename(n).split(".")[0] for n in imgs]
-
 
         acc = []
         times = []
+        rospy.loginfo(f"Found {len(imgs)} images in {self.test_dir}")
 
         for i, img in enumerate(imgs):
             im = numpy2tensor(cv2.imread(img), self.args.img_size).unsqueeze(0).to(self.device)
@@ -63,6 +66,7 @@ class LPRNetInferenceNode:
             t0 = time.time()
             logit = self.model(im).detach().to("cpu")
             pred, _ = decode(logit, self.args.chars)
+            rospy.loginfo({pred[0]})
             t1 = time.time()
 
             acc.append(pred[0] == labels[i])
@@ -70,8 +74,7 @@ class LPRNetInferenceNode:
 
             # 결과 출력 및 퍼블리시
             result_msg = f"Image: {os.path.basename(img)}, Prediction: {pred[0]}, Label: {labels[i]}"
-            self.plate_dictionary[os.path.basename(img)] = pred[0]
-            rospy.loginfo(pred[0])
+            self.plate_dictionary[pred[0]] = os.path.splitext(os.path.basename(img))[0]
 
             rospy.loginfo(result_msg)
             self.result_pub.publish(result_msg)

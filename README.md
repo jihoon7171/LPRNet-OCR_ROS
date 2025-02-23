@@ -26,8 +26,7 @@ source devel/setup.bash  # ROS environment setup
 
 # Configuration
 
-Please modify the paths for test_dir, pretrained, and other settings in the config.yaml file inside the ocr_ros/config directory before use.
-
+Please modify the paths for test_dir, pretrained, and other settings in the ocr_ros.launch file 
 # How to Run
 
 To run the system, execute the following commands:
